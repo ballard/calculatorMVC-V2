@@ -67,6 +67,7 @@ class ViewController: UIViewController {
         }
         
         displayValue = brain.result
+        
         history.text = brain.description + (brain.isPartialResult ? "..." : "=")
         
     }
