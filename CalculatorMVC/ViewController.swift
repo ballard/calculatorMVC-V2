@@ -14,8 +14,6 @@ class ViewController: UIViewController {
     @IBOutlet private weak var display: UILabel!
     
     @IBOutlet weak var history: UILabel!
-
-    private let zeroSymbol = "0"
     
     private var userIsInTheMiddleOfTypingANumber = false
     
@@ -23,9 +21,11 @@ class ViewController: UIViewController {
     
     private var brain = CalculatorBrain()
     
+    private let numberStyle = NSNumberFormatter()
+    
     private var displayValue: Double? {
         get{
-            if let result = NSNumberFormatter().numberFromString(display.text!)?.doubleValue{
+            if let result = numberStyle.numberFromString(display.text!)?.doubleValue {
                 return result
             } else {
                 return nil
@@ -33,9 +33,26 @@ class ViewController: UIViewController {
         }
         set{
             if let result = newValue {
-                display.text = String(result)
+                display.text = numberStyle.stringFromNumber(result)
             } else {
                 display.text = "Error"
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        numberStyle.numberStyle = .DecimalStyle
+        numberStyle.maximumFractionDigits = 6
+    }
+    
+    @IBAction func backSpace(sender: AnyObject) {
+        if display.text != nil {
+            if display.text!.characters.count > 1 {
+                display.text!.removeAtIndex(display.text!.endIndex.predecessor())
+            } else {
+                display.text = "0"
+                userIsInTheMiddleOfTypingANumber = false
             }
         }
     }
@@ -54,22 +71,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func operate(sender: UIButton) {
-        
         if userIsInTheMiddleOfTypingANumber{
             if let operand = displayValue{
                 brain.setOperand(operand)
                 userIsInTheMiddleOfTypingANumber = false
             }
         }
-        
         if let operation = sender.currentTitle {
             brain.performOperation(operation)
         }
-        
         displayValue = brain.result
-        
         history.text = brain.description + (brain.isPartialResult ? "..." : "=")
-        
     }
     
     var savedProgram : CalculatorBrain.PropertyList?
@@ -86,9 +98,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func clear() {
-        
         brain.clear()
-        
         display.text = "0"
         history.text = " "
     }

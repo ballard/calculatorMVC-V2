@@ -11,7 +11,7 @@ import Foundation
 class CalculatorBrain
 {   
     private var accumulator = 0.0
-    private var descriptionAccumulator = "0"{
+    private var descriptionAccumulator = "0" {
         didSet{
             if pending == nil {
                 currentPredecence = Int.max
@@ -20,21 +20,31 @@ class CalculatorBrain
     }
     
     private var currentPredecence = Int.max
-    
     private var internalProgram  = [AnyObject]()
+    private let numberStyle = NSNumberFormatter()
 
+    init()
+    {
+        numberStyle.numberStyle = .DecimalStyle
+        numberStyle.maximumFractionDigits = 6
+    }
+    
     func setOperand(operand: Double) {
         accumulator = operand
         internalProgram.append(operand)
-        descriptionAccumulator = String(format:"%g", operand)
+        descriptionAccumulator = numberStyle.stringFromNumber(operand)!
     }
     
     private var operations = [
+        "I" : Operation.Random(drand48()),
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
+        "ln" : Operation.UnaryOperation(log){"ln(" + $0 + ")" },
+        "x²" : Operation.UnaryOperation({pow($0, 2)}){ "(" + $0 + ")²" },
+        "1/x" : Operation.UnaryOperation({1/$0}){ "(1/(" + $0 + "))" },
         "√" : Operation.UnaryOperation(sqrt){"√(" + $0 + ")"},
-        "cos" : Operation.UnaryOperation(cos){"cos(" + $0 + ")"},
-        "sin" : Operation.UnaryOperation(sin){"sin(" + $0 + ")"},
+        "cos" : Operation.UnaryOperation({cos(M_PI*$0/180)}){"cos(" + $0 + ")"},
+        "sin" : Operation.UnaryOperation({sin(M_PI*$0/180)}){"sin(" + $0 + ")"},
         "±" : Operation.UnaryOperation({-$0}){"-(" + $0 + ")"},
         "×" : Operation.BinaryOperation(*, 1){$0 + "×" + $1},
         "÷" : Operation.BinaryOperation(/, 1){$0 + "÷" + $1},
@@ -44,6 +54,7 @@ class CalculatorBrain
     ]
     
     private enum Operation {
+        case Random(Double)
         case Constant(Double)
         case UnaryOperation((Double) -> Double, (String)->String)
         case BinaryOperation((Double,Double) -> Double, Int, (String,String)->String)
@@ -54,6 +65,9 @@ class CalculatorBrain
         if let operation = operations[symbol]{
             internalProgram.append(symbol)
             switch operation {
+            case.Random(let value):
+                accumulator = value
+                descriptionAccumulator = numberStyle.stringFromNumber(value)!
             case .Constant (let value):
                 accumulator = value
                 descriptionAccumulator = symbol
