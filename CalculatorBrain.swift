@@ -109,11 +109,11 @@ class CalculatorBrain
     }
     
     var result: Double? {
-        if accumulator.isNaN {
-            return nil
-        } else {
+//        if accumulator.isNaN {
+//            return nil
+//        } else {
             return accumulator
-        }
+//        }
     }
     
     var description: String{

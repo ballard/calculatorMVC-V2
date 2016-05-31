@@ -35,7 +35,7 @@ class ViewController: UIViewController {
             if let result = newValue {
                 display.text = numberStyle.stringFromNumber(result)
             } else {
-                display.text = "Error"
+                display.text = "0"
             }
         }
     }
@@ -44,6 +44,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         numberStyle.numberStyle = .DecimalStyle
         numberStyle.maximumFractionDigits = 6
+        numberStyle.notANumberSymbol = "Error"
     }
     
     @IBAction func backSpace(sender: AnyObject) {
@@ -99,10 +100,9 @@ class ViewController: UIViewController {
     
     @IBAction func clear() {
         brain.clear()
-        display.text = "0"
+        displayValue = nil
         history.text = " "
     }
-    
 }
 
 
