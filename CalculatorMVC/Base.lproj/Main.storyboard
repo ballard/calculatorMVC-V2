@@ -364,6 +364,9 @@
                                                         <state key="normal" title="M">
                                                             <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="gatVariable" destination="BYZ-38-t0r" eventType="touchUpInside" id="n5g-sK-lCV"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F63-Oi-4ZL">
                                                         <rect key="frame" x="362" y="0.0" width="117" height="84"/>
@@ -371,6 +374,9 @@
                                                         <state key="normal" title="→M">
                                                             <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="getVariable" destination="BYZ-38-t0r" eventType="touchUpInside" id="vCe-qV-XjS"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GgV-ns-shR">
                                                         <rect key="frame" x="482" y="0.0" width="118" height="84"/>

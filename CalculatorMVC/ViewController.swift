@@ -85,6 +85,14 @@ class ViewController: UIViewController {
         history.text = brain.description + (brain.isPartialResult ? "..." : "=")
     }
     
+    @IBAction func gatVariable() {
+        
+    }
+    
+    @IBAction func getVariable() {
+    }
+    
+    
     @IBAction func clear() {
         brain.clear()
         displayValue = nil
