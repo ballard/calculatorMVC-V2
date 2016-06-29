@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CalculatorViewController: UIViewController {
 
 
     @IBOutlet private weak var display: UILabel!
@@ -48,13 +48,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func backSpace(sender: AnyObject) {
-        if display.text != nil {
-            if display.text!.characters.count > 1 {
-                display.text!.removeAtIndex(display.text!.endIndex.predecessor())
-            } else {
-                display.text = "0"
-                userIsInTheMiddleOfTypingANumber = false
+        if userIsInTheMiddleOfTypingANumber{
+            if display.text != nil {
+                if display.text!.characters.count > 1 {
+                    display.text!.removeAtIndex(display.text!.endIndex.predecessor())
+                } else {
+                    display.text = "0"
+                    userIsInTheMiddleOfTypingANumber = false
+                }
             }
+        } else {
+            brain.undo()
+            displayValue = brain.result
+            history.text = brain.description + (brain.isPartialResult ? "..." : "=")            
         }
     }
     
@@ -85,16 +91,32 @@ class ViewController: UIViewController {
         history.text = brain.description + (brain.isPartialResult ? "..." : "=")
     }
     
-    @IBAction func gatVariable() {
+
+    @IBAction func setVariable() {
+        if userIsInTheMiddleOfTypingANumber{
+            if let operand = displayValue{
+                brain.variableValues["M"] = operand
+                displayValue = brain.result
+                print("variableValues: \(brain.variableValues)")
+                userIsInTheMiddleOfTypingANumber = false
+            }
+        }
+    }
+    
+    @IBAction func getVariable(sender: UIButton) {
+        if let variableValue = sender.currentTitle{
+            brain.setOperand(variableValue)
+            history.text = brain.description + (brain.isPartialResult ? "..." : "=")
+        }
+    }
+    
+    @IBAction func undo() {
         
     }
     
-    @IBAction func getVariable() {
-    }
-    
-    
     @IBAction func clear() {
         brain.clear()
+        brain.variableValues.removeAll()
         displayValue = nil
         history.text = " "
     }

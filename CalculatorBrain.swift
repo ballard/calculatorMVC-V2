@@ -19,9 +19,27 @@ class CalculatorBrain
         }
     }
     
+    private var currentVariable = ""
+    
+    var variableValues = [String:Double](){
+        didSet{
+            if internalProgram.count > 0 {
+                program = internalProgram
+            }
+        }
+    }
+    
     private var currentPredecence = Int.max
     private var internalProgram  = [AnyObject]()
     private let numberStyle = NSNumberFormatter()
+    
+    func undo() {
+        if internalProgram.count > 0{
+            internalProgram.removeAtIndex(internalProgram.count - 1)
+            program = internalProgram
+        }
+        print("internal program: \(internalProgram)")
+    }
 
     init()
     {
@@ -33,6 +51,17 @@ class CalculatorBrain
         accumulator = operand
         internalProgram.append(operand)
         descriptionAccumulator = numberStyle.stringFromNumber(operand)!
+    }
+    
+    func setOperand(variableName: String) {
+        if let value = variableValues[variableName]{
+            accumulator = value
+        } else{
+            accumulator = 0.0
+        }
+        internalProgram.append(variableName)
+        descriptionAccumulator = variableName
+        operations[variableName] = Operation.Variable
     }
     
     private var operations = [
@@ -54,6 +83,7 @@ class CalculatorBrain
     ]
     
     private enum Operation {
+        case Variable
         case Random(Double)
         case Constant(Double)
         case UnaryOperation((Double) -> Double, (String)->String)
@@ -65,6 +95,11 @@ class CalculatorBrain
         if let operation = operations[symbol]{
             internalProgram.append(symbol)
             switch operation {
+            case .Variable:
+                if let value = variableValues[currentVariable]{
+                    accumulator = value
+                    descriptionAccumulator = currentVariable
+                }
             case.Random(let value):
                 accumulator = value
                 descriptionAccumulator = numberStyle.stringFromNumber(value)!
@@ -109,11 +144,7 @@ class CalculatorBrain
     }
     
     var result: Double? {
-//        if accumulator.isNaN {
-//            return nil
-//        } else {
-            return accumulator
-//        }
+        return accumulator
     }
     
     var description: String{
@@ -129,6 +160,7 @@ class CalculatorBrain
         accumulator = 0.0
         internalProgram.removeAll()
         descriptionAccumulator = "0"
+        currentVariable = ""
     }
     
     typealias PropertyList = AnyObject
@@ -145,6 +177,7 @@ class CalculatorBrain
                         self.setOperand(operand)
                     }
                     else if let operation = op as? String{
+                        currentVariable = operation
                         self.performOperation(operation)
                     }
                 }
