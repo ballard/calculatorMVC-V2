@@ -10,34 +10,21 @@ import UIKit
 
 class CalculatorViewController: UIViewController {
 
-
     @IBOutlet private weak var display: UILabel!
-    
     @IBOutlet weak var history: UILabel!
     
-    private var userIsInTheMiddleOfTypingANumber = false
-    
-    let decimalSeparator = NSNumberFormatter().decimalSeparator
-    
-    private var brain = CalculatorBrain()
-    
+    private let decimalSeparator = NSNumberFormatter().decimalSeparator
     private let numberStyle = NSNumberFormatter()
     
+    private var userIsInTheMiddleOfTypingANumber = false
+    private var brain = CalculatorBrain()    
     private var displayValue: Double? {
         get{
-            if let result = numberStyle.numberFromString(display.text!)?.doubleValue {
-                return result
-            } else {
-                return nil
-            }
+            return numberStyle.numberFromString(display.text!)?.doubleValue ?? nil
         }
         set{
-            if let result = newValue {
-                display.text = numberStyle.stringFromNumber(result)
-            } else {
-                display.text = "0"
-            }
-        }
+            let result = newValue ?? 0
+            display.text = numberStyle.stringFromNumber(result)        }
     }
     
     override func viewDidLoad() {
@@ -71,7 +58,7 @@ class CalculatorViewController: UIViewController {
                     display.text = display.text! + digit
                 }
             } else {
-            display.text = digit
+                display.text = digit
             }
             userIsInTheMiddleOfTypingANumber = true
         }
@@ -93,13 +80,11 @@ class CalculatorViewController: UIViewController {
     
 
     @IBAction func setVariable() {
-        if userIsInTheMiddleOfTypingANumber{
-            if let operand = displayValue{
-                brain.variableValues["M"] = operand
-                displayValue = brain.result
-                print("variableValues: \(brain.variableValues)")
-                userIsInTheMiddleOfTypingANumber = false
-            }
+        if let operand = displayValue{
+            brain.variableValues["M"] = operand
+            displayValue = brain.result
+            print("variableValues: \(brain.variableValues)")
+            userIsInTheMiddleOfTypingANumber = false
         }
     }
     
@@ -109,16 +94,13 @@ class CalculatorViewController: UIViewController {
             history.text = brain.description + (brain.isPartialResult ? "..." : "=")
         }
     }
-    
-    @IBAction func undo() {
         
-    }
-    
     @IBAction func clear() {
         brain.clear()
         brain.variableValues.removeAll()
         displayValue = nil
         history.text = " "
+        userIsInTheMiddleOfTypingANumber = false
     }
 }
 

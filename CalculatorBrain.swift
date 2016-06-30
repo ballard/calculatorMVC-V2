@@ -23,10 +23,7 @@ class CalculatorBrain
     
     var variableValues = [String:Double](){
         didSet{
-            if internalProgram.count > 0 {
-                program = internalProgram
-            }
-        }
+            program = internalProgram        }
     }
     
     private var currentPredecence = Int.max
@@ -34,8 +31,8 @@ class CalculatorBrain
     private let numberStyle = NSNumberFormatter()
     
     func undo() {
-        if internalProgram.count > 0{
-            internalProgram.removeAtIndex(internalProgram.count - 1)
+        if !internalProgram.isEmpty{
+            internalProgram.removeLast()
             program = internalProgram
         }
         print("internal program: \(internalProgram)")
@@ -53,12 +50,8 @@ class CalculatorBrain
         descriptionAccumulator = numberStyle.stringFromNumber(operand)!
     }
     
-    func setOperand(variableName: String) {
-        if let value = variableValues[variableName]{
-            accumulator = value
-        } else{
-            accumulator = 0.0
-        }
+    func setOperand(variableName: String) {        
+        accumulator = variableValues[variableName] ?? 0.0
         internalProgram.append(variableName)
         descriptionAccumulator = variableName
         operations[variableName] = Operation.Variable
