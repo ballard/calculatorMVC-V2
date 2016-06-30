@@ -11,6 +11,9 @@ import Foundation
 class CalculatorBrain
 {   
     private var accumulator = 0.0
+    
+    var errorReport:String? = nil
+    
     private var descriptionAccumulator = "0" {
         didSet{
             if pending == nil {
@@ -23,7 +26,8 @@ class CalculatorBrain
     
     var variableValues = [String:Double](){
         didSet{
-            program = internalProgram        }
+            program = internalProgram
+        }
     }
     
     private var currentPredecence = Int.max
@@ -61,13 +65,13 @@ class CalculatorBrain
         "I" : Operation.Random(drand48()),
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
-        "ln" : Operation.UnaryOperation(log){"ln(" + $0 + ")" },
-        "x²" : Operation.UnaryOperation({pow($0, 2)}){ "(" + $0 + ")²" },
-        "1/x" : Operation.UnaryOperation({1/$0}){ "(1/(" + $0 + "))" },
-        "√" : Operation.UnaryOperation(sqrt){"√(" + $0 + ")"},
-        "cos" : Operation.UnaryOperation({cos(M_PI*$0/180)}){"cos(" + $0 + ")"},
-        "sin" : Operation.UnaryOperation({sin(M_PI*$0/180)}){"sin(" + $0 + ")"},
-        "±" : Operation.UnaryOperation({-$0}){"-(" + $0 + ")"},
+        "ln" : Operation.UnaryOperation(log, {"ln(" + $0 + ")" }, { (s1) in return nil}),
+        "x²" : Operation.UnaryOperation({pow($0, 2)},{ "(" + $0 + ")²" }, { (s1) in return nil}),
+        "1/x" : Operation.UnaryOperation({1/$0},{ "(1/(" + $0 + "))" }, { (s1) in if isinf(s1) { return "zero divide" } else {return nil}}),
+        "√" : Operation.UnaryOperation(sqrt, {"√(" + $0 + ")"}, {(s1) in if isnan(s1) {return "negative root"} else { return nil } }),
+        "cos" : Operation.UnaryOperation(cos, {"cos(" + $0 + ")"}, { (s1) in return nil} ),
+        "sin" : Operation.UnaryOperation(sin, {"sin(" + $0 + ")"}, { (s1) in return nil} ),
+        "±" : Operation.UnaryOperation(-, {"-(" + $0 + ")"}, {(s1) in return nil}),
         "×" : Operation.BinaryOperation(*, 1){$0 + "×" + $1},
         "÷" : Operation.BinaryOperation(/, 1){$0 + "÷" + $1},
         "+" : Operation.BinaryOperation(+, 0){$0 + "+" + $1},
@@ -79,7 +83,7 @@ class CalculatorBrain
         case Variable
         case Random(Double)
         case Constant(Double)
-        case UnaryOperation((Double) -> Double, (String)->String)
+        case UnaryOperation((Double) -> Double, (String)->String, (Double)->String?)
         case BinaryOperation((Double,Double) -> Double, Int, (String,String)->String)
         case Equals
     }
@@ -99,8 +103,9 @@ class CalculatorBrain
             case .Constant (let value):
                 accumulator = value
                 descriptionAccumulator = symbol
-            case .UnaryOperation (let function, let descriptionFunction):
+            case .UnaryOperation (let function, let descriptionFunction, let report):
                 accumulator = function(accumulator)
+                errorReport = report(accumulator)
                 descriptionAccumulator = descriptionFunction(descriptionAccumulator)
             case .BinaryOperation (let function, let predecence, let descriptionFunction):
                 executePendingBinaryOperation()
@@ -118,6 +123,9 @@ class CalculatorBrain
     private func executePendingBinaryOperation(){
         if pending != nil{
             accumulator = pending!.binaryFunction(pending!.firstOperand, accumulator)
+            if accumulator.isInfinite{
+                errorReport = "zero divide"
+            }
             descriptionAccumulator = pending!.descriptionFunction(pending!.descriptionOperand, descriptionAccumulator)
             pending = nil
         }

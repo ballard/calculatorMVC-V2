@@ -24,7 +24,13 @@ class CalculatorViewController: UIViewController {
         }
         set{
             let result = newValue ?? 0
-            display.text = numberStyle.stringFromNumber(result)        }
+            if let report = brain.errorReport {
+                display.text = report
+                brain.errorReport = nil
+            } else {
+                display.text = numberStyle.stringFromNumber(result)
+            }
+        }
     }
     
     override func viewDidLoad() {

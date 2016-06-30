@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorBrain.swift"
-            timestampString = "486338782.087508"
+            timestampString = "489009484.158835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "operations"
-            landmarkType = "19">
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "setOperand(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorBrain.swift"
-            timestampString = "486338782.087508"
+            timestampString = "489011762.312925"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
             landmarkName = "CalculatorBrain"
             landmarkType = "3">
          </BreakpointContent>
@@ -58,13 +58,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorBrain.swift"
-            timestampString = "486338782.087508"
+            timestampString = "489009484.158835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "performOperation(_:)"
-            landmarkType = "5">
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "CalculatorBrain"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,13 +106,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorBrain.swift"
-            timestampString = "486337358.734229"
+            timestampString = "489009484.158835"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "operations"
-            landmarkType = "19">
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "CalculatorBrain"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
