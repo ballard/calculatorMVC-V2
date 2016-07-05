@@ -61,6 +61,11 @@ class CalculatorBrain
         operations[variableName] = Operation.Variable
     }
     
+    
+    func addUnaryOperation(symbol: String, operation: (Double) -> Double){
+        operations[symbol] = Operation.UnaryOperation(operation, {"√(" + $0 + ")"}, {(s1) in if isnan(s1) {return "negative root"} else { return nil } })
+    }
+    
     private var operations = [
         "I" : Operation.Random(drand48()),
         "π" : Operation.Constant(M_PI),

@@ -8,6 +8,8 @@
 
 import UIKit
 
+var calculatorCount = 0
+
 class CalculatorViewController: UIViewController {
 
     @IBOutlet private weak var display: UILabel!
@@ -17,6 +19,7 @@ class CalculatorViewController: UIViewController {
     private let numberStyle = NSNumberFormatter()
     
     private var userIsInTheMiddleOfTypingANumber = false
+    
     private var brain = CalculatorBrain()    
     private var displayValue: Double? {
         get{
@@ -34,10 +37,22 @@ class CalculatorViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        calculatorCount += 1
+        print("Loaded a Calculator (count = \(calculatorCount))")
+        brain.addUnaryOperation("Z") { [ weak weakSelf = self ] in
+            weakSelf?.display.textColor = UIColor.redColor()
+            return sqrt($0)
+        }
         numberStyle.numberStyle = .DecimalStyle
         numberStyle.maximumFractionDigits = 6
         numberStyle.notANumberSymbol = "Error"
+    }
+    
+    deinit{
+        calculatorCount -= 1
+        print("Calculator left heap (count = \(calculatorCount))")
     }
     
     @IBAction func backSpace(sender: AnyObject) {
