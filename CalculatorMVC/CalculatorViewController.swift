@@ -108,6 +108,21 @@ class CalculatorViewController: UIViewController {
         history.text = " "
         userIsInTheMiddleOfTypingANumber = false
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
+            graphvc.graphLabelValue = "New Graph"
+            graphvc.navigationItem.title = "Graph View"
+        }
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if !brain.isPartialResult{
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 

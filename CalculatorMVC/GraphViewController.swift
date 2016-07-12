@@ -9,18 +9,22 @@
 import UIKit
 
 class GraphViewController: UIViewController {
-
+    
+    
+    @IBOutlet weak var graphLabel: UILabel!{
+        didSet{
+            graphLabel.text = graphLabelValue
+        }
+    }    
+    
+    var graphLabelValue = "Default"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.navigationItem.title = "Default"
 
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
 
     /*
     // MARK: - Navigation
