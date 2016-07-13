@@ -445,16 +445,25 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXm-Zn-bLE" customClass="GraphView" customModule="CalculatorMVC" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Sdj-4w-qOF" firstAttribute="centerY" secondItem="QLF-6b-5gD" secondAttribute="centerY" id="4os-UE-zde"/>
-                            <constraint firstItem="Sdj-4w-qOF" firstAttribute="centerX" secondItem="QLF-6b-5gD" secondAttribute="centerX" id="v9d-r0-5QB"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="centerY" secondItem="Sdj-4w-qOF" secondAttribute="centerY" id="68u-1H-lZU"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="ZQA-mH-KWQ"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="centerX" secondItem="Sdj-4w-qOF" secondAttribute="centerX" id="f6s-UP-UFb"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="bottom" secondItem="w1p-f0-Zx6" secondAttribute="top" id="oaq-dP-qDF"/>
+                            <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="rWj-f0-DX3"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="QLF-6b-5gD" secondAttribute="top" id="yuO-s1-dxt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="default" id="1sg-2c-eIe"/>
                     <connections>
                         <outlet property="graphLabel" destination="Sdj-4w-qOF" id="3ZG-4W-MFw"/>
+                        <outlet property="graphView" destination="fXm-Zn-bLE" id="8SP-Tw-Y9L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xF7-cW-UmN" userLabel="First Responder" sceneMemberID="firstResponder"/>

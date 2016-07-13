@@ -11,6 +11,10 @@ import UIKit
 class GraphViewController: UIViewController {
     
     
+    
+    @IBOutlet weak var graphView: GraphView!
+    
+    
     @IBOutlet weak var graphLabel: UILabel!{
         didSet{
             graphLabel.text = graphLabelValue
@@ -25,6 +29,7 @@ class GraphViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
 
     /*
     // MARK: - Navigation
