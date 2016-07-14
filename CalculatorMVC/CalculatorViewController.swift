@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CalculatorViewController: UIViewController {
+class CalculatorViewController: UIViewController, UISplitViewControllerDelegate {
 
     @IBOutlet private weak var display: UILabel!
     @IBOutlet weak var history: UILabel!
@@ -38,6 +38,7 @@ class CalculatorViewController: UIViewController {
         numberStyle.numberStyle = .DecimalStyle
         numberStyle.maximumFractionDigits = 6
         numberStyle.notANumberSymbol = "Error"
+        splitViewController?.delegate = self
     }
     
     @IBAction func backSpace(sender: AnyObject) {
@@ -123,6 +124,16 @@ class CalculatorViewController: UIViewController {
             return false
         }
     }
+    
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        if primaryViewController.contentViewController == self{
+            if secondaryViewController.contentViewController is GraphViewController{
+                return true
+            }
+        }
+        return false
+    }
+    
 }
 
 
