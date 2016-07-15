@@ -464,6 +464,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="fXm-Zn-bLE" firstAttribute="centerY" secondItem="Sdj-4w-qOF" secondAttribute="centerY" id="68u-1H-lZU"/>
                             <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="ZQA-mH-KWQ"/>
@@ -472,6 +473,9 @@
                             <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="rWj-f0-DX3"/>
                             <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="QLF-6b-5gD" secondAttribute="top" id="yuO-s1-dxt"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="9Yz-9h-FNC" appends="YES" id="VRm-G1-Gr6"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" title="default" id="1sg-2c-eIe"/>
                     <connections>
@@ -490,6 +494,11 @@
                         <action selector="tap:" destination="gmM-O3-cTB" id="m48-gY-VnR"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="9Yz-9h-FNC">
+                    <connections>
+                        <action selector="pan:" destination="gmM-O3-cTB" id="vh8-MP-qkT"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1955" y="863"/>
         </scene>
