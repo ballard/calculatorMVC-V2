@@ -28,7 +28,7 @@ class GraphViewController: UIViewController {
 //    }
     
     override func viewDidAppear(animated: Bool) {
-        graphView?.point = graphView.center
+        graphView?.pointAxesCenter = graphView.center
     }
     
     @IBAction func zoom(recognizer: UIPinchGestureRecognizer) {
@@ -43,7 +43,7 @@ class GraphViewController: UIViewController {
     
     @IBAction func tap(recognizer: UITapGestureRecognizer) {
         if recognizer.state == .Ended{
-            graphView.point = recognizer.locationInView(graphView)
+            graphView.pointAxesCenter = recognizer.locationInView(graphView)
         }
     }
     
@@ -54,8 +54,9 @@ class GraphViewController: UIViewController {
         case .Began:
             previousPanCoordinates = recognizer.locationInView(graphView)
         case .Changed, .Ended:
-            graphView.point.x += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)/10.0
-            graphView.point.y += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)/10.0
+            graphView.graphOriginPointX += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
+            graphView.graphOriginPointY += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
+            previousPanCoordinates = recognizer.locationInView(graphView)
         default:
             break
         }        

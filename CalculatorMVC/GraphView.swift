@@ -17,10 +17,29 @@ class GraphView: UIView {
     var scale : CGFloat = 5.0 { didSet { setNeedsDisplay() } }
     
     @IBInspectable
-    var point = CGPoint(x: 0.0, y: 0.0) { didSet {setNeedsDisplay()} }
+    var graphOriginPointX : CGFloat {
+        get {
+            return pointAxesCenter.x
+        }
+        set {
+            pointAxesCenter.x = newValue
+        }
+    }
+    
+    @IBInspectable
+    var graphOriginPointY: CGFloat {
+        get {
+            return pointAxesCenter.y
+        }
+        set {
+            pointAxesCenter.y = newValue
+        }
+    }
+    
+    var pointAxesCenter = CGPoint(x: 0.0, y: 0.0) { didSet {setNeedsDisplay() } }
     
     override func drawRect(rect: CGRect) {
-        Axes.drawAxesInRect(self.bounds, origin: point, pointsPerUnit: scale)
+        Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
     }
     
     /*
