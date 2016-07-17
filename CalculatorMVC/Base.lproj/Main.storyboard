@@ -439,12 +439,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Graph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdj-4w-qOF">
-                                <rect key="frame" x="276" y="289" width="48" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXm-Zn-bLE" customClass="GraphView" customModule="CalculatorMVC" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -454,10 +448,10 @@
                                         <real key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="scale">
-                                        <real key="value" value="2"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="graphOriginPointX">
-                                        <real key="value" value="150"/>
+                                        <real key="value" value="300"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="graphOriginPointY">
                                         <real key="value" value="300"/>
@@ -472,12 +466,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="centerY" secondItem="Sdj-4w-qOF" secondAttribute="centerY" id="68u-1H-lZU"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="ZQA-mH-KWQ"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="centerX" secondItem="Sdj-4w-qOF" secondAttribute="centerX" id="f6s-UP-UFb"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="bottom" secondItem="w1p-f0-Zx6" secondAttribute="top" id="oaq-dP-qDF"/>
-                            <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="rWj-f0-DX3"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="QLF-6b-5gD" secondAttribute="top" id="yuO-s1-dxt"/>
+                            <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="3u9-10-xZZ"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="EKn-af-oRw"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="QLF-6b-5gD" secondAttribute="top" id="RJR-fD-9I1"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="bottom" secondItem="w1p-f0-Zx6" secondAttribute="top" id="Y9k-lk-Qtf"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="9Yz-9h-FNC" appends="YES" id="VRm-G1-Gr6"/>
@@ -485,7 +477,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="default" id="1sg-2c-eIe"/>
                     <connections>
-                        <outlet property="graphLabel" destination="Sdj-4w-qOF" id="3ZG-4W-MFw"/>
                         <outlet property="graphView" destination="fXm-Zn-bLE" id="8SP-Tw-Y9L"/>
                     </connections>
                 </viewController>

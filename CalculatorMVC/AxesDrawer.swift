@@ -11,7 +11,7 @@ import UIKit
 class AxesDrawer
 {
     private struct Constants {
-        static let HashmarkSize: CGFloat = 6
+        static let HashmarkSize: CGFloat = 10
     }
     
     var color = UIColor.blueColor()

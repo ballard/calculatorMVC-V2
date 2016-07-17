@@ -112,7 +112,6 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
-            graphvc.graphLabelValue = "New Graph"
             graphvc.navigationItem.title = "Graph View"
         }
     }
