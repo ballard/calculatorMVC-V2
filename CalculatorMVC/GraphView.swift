@@ -11,7 +11,7 @@ import UIKit
 @IBDesignable
 class GraphView: UIView {
     
-    let Axes = AxesDrawer()
+    private let Axes = AxesDrawer()
     var chartData = [value]()
     
     @IBInspectable
@@ -52,7 +52,7 @@ class GraphView: UIView {
         }
     }
     
-    func pointFromValue ( pointValue : value ) -> CGPoint {
+    private func pointFromValue ( pointValue : value ) -> CGPoint {
         return CGPoint(x: pointAxesCenter.x + (pointValue.x * scale), y: pointAxesCenter.y - (pointValue.y * scale))
     }
     

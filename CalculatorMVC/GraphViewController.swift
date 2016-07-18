@@ -15,33 +15,44 @@ struct value {
 
 class GraphViewController: UIViewController {
     
-    @IBOutlet weak var graphView: GraphView!
+    @IBOutlet private weak var graphView: GraphView!
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    private var chartSettings = [AnyObject]()
+    typealias PropertyList = AnyObject
+    
+    var settings : PropertyList {
+        get {
+            return chartSettings
+        }
+    }
     
     var chartFunc : ((CGFloat) -> CGFloat)? = nil
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        graphView?.pointAxesCenter =  CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)//graphView.center
+    override internal func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        graphView?.pointAxesCenter =  CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)
         printGraphData()
+        
     }
     
-    var previousGraphScale : CGFloat = 0.0
-    var previousGraphOrigin : CGPoint = CGPoint(x: 0.0, y: 0.0)
+    private var previousGraphScale : CGFloat = 0.0
+    private var previousGraphOrigin : CGPoint = CGPoint(x: 0.0, y: 0.0)
     
-    override func viewWillLayoutSubviews() {
+    override internal func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
         previousGraphScale = graphView.scale
         previousGraphOrigin = graphView.pointAxesCenter
     }
     
-    override func viewDidLayoutSubviews() {
-        graphView?.scale = previousGraphScale
-        graphView?.pointAxesCenter = graphView.pointAxesCenter
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(true)
+        if !defaults.synchronize(){
+            
+        }
     }
     
-    @IBAction func zoom(recognizer: UIPinchGestureRecognizer) {
+    @IBAction private func zoom(recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
         case .Changed,.Ended:
             graphView?.scale *= recognizer.scale
@@ -52,16 +63,16 @@ class GraphViewController: UIViewController {
         }
     }
     
-    @IBAction func tap(recognizer: UITapGestureRecognizer) {
+    @IBAction private func tap(recognizer: UITapGestureRecognizer) {
         if recognizer.state == .Ended{
             graphView.pointAxesCenter = recognizer.locationInView(graphView)
             printGraphData()
         }
     }
     
-    var previousPanCoordinates = CGPoint(x: 0.0, y: 0.0)
+    private var previousPanCoordinates = CGPoint(x: 0.0, y: 0.0)
     
-    @IBAction func pan(recognizer: UIPanGestureRecognizer) {
+    @IBAction private func pan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .Began:
             previousPanCoordinates = recognizer.locationInView(graphView)
@@ -75,11 +86,11 @@ class GraphViewController: UIViewController {
         }
     }
 
-    func printGraphData() {
+    private func printGraphData() {
         if let function = chartFunc {
-            let chartPoints = graphView.bounds.width
+            let chartPoints = graphView.bounds.maxX
             let xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
-            let xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
+            let xMax = (chartPoints - graphView.graphOriginPointX) / graphView.scale
             let xDelta = xMax - xMin
             let xStep = xDelta/CGFloat(chartPoints)
             var graphData = [value]()
