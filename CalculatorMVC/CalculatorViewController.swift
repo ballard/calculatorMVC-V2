@@ -17,7 +17,8 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     private let numberStyle = NSNumberFormatter()
     
     private var userIsInTheMiddleOfTypingANumber = false
-    private var brain = CalculatorBrain()    
+    private var brain = CalculatorBrain()
+    
     private var displayValue: Double? {
         get{
             return numberStyle.numberFromString(display.text!)?.doubleValue ?? nil
@@ -112,7 +113,15 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
-            graphvc.navigationItem.title = "Graph View"
+            graphvc.navigationItem.title = brain.description
+            graphvc.chartFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
+                weakSelf?.brain.variableValues["M"] = Double(inputValue)
+                if let result = weakSelf?.brain.result{
+                    return CGFloat(result)
+                } else {
+                    return 0.0
+                }
+            })
         }
     }
     
@@ -134,5 +143,4 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     }
     
 }
-
 

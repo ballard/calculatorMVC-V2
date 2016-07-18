@@ -15,10 +15,13 @@ struct value {
 
 class GraphViewController: UIViewController {
     
-    let myPoint = value()
-    let myPoint2 = value(x: 3.0, y: 3.0)
-    
     @IBOutlet weak var graphView: GraphView!
+    
+    var chartFunc : ((CGFloat) -> CGFloat)? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
     
     override func viewDidAppear(animated: Bool) {
         graphView?.pointAxesCenter =  CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)//graphView.center
@@ -43,7 +46,7 @@ class GraphViewController: UIViewController {
         case .Changed,.Ended:
             graphView?.scale *= recognizer.scale
             recognizer.scale = 1.0
-            printGraphData()
+            printGraphData ()
         default:
             break
         }
@@ -73,34 +76,27 @@ class GraphViewController: UIViewController {
     }
 
     func printGraphData() {
-        let chartPoints = graphView.bounds.width
-        let xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
-        let xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
-        let xDelta = xMax - xMin
-        let xStep = xDelta/CGFloat(chartPoints)
-        var graphData = [value]()
-        for graphIndex in 1...Int(chartPoints){
-            let xValue = xMin + (xStep * CGFloat(graphIndex))
-            let yValue = sin(xValue)
-            graphData.append(value(x: xValue, y: yValue))
+        if let function = chartFunc {
+            let chartPoints = graphView.bounds.width
+            let xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
+            let xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
+            let xDelta = xMax - xMin
+            let xStep = xDelta/CGFloat(chartPoints)
+            var graphData = [value]()
+            for graphIndex in 1...Int(chartPoints){
+                let xValue = xMin + (xStep * CGFloat(graphIndex))
+                let yValue = function(xValue)
+                if yValue.isNormal || yValue.isZero {
+                    graphData.append(value(x: xValue, y: yValue))
+                }
+            }
+            graphView.chartData = graphData
+            print("X min  : \( xMin )")
+            print("X max  : \( xMax )")
+            print("Y max : \(graphView.graphOriginPointY / graphView.scale)")
+            print("Y min  : \( -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale))")
+            print("X points : \(graphView.bounds.maxX * graphView.scale)")
+            print("Graph scale: \(graphView.scale)")
         }
-        graphView.chartData = graphData
-        print("X min  : \( xMin )")
-        print("X max  : \( xMax )")
-        print("Y max : \(graphView.graphOriginPointY / graphView.scale)")
-        print("Y min  : \( -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale))")
-        print("X points : \(graphView.bounds.maxX * graphView.scale)")
-        print("Graph scale: \(graphView.scale)")
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

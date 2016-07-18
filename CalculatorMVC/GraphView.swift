@@ -41,19 +41,6 @@ class GraphView: UIView {
     
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
-        drawMultiLine()
-//        drawLine(value(x: 10.0, y: 10.0), pointEnd: value(x: 30.0, y: 30.0))
-    }
-    
-    func drawLine(pointStart : value, pointEnd : value) {
-        let path = UIBezierPath()
-        path.moveToPoint(pointFromValue(chartData[0]))
-        path.addLineToPoint(pointFromValue(chartData[1]))
-        path.lineWidth = 3.0
-        path.stroke()
-    }
-    
-    func drawMultiLine(){
         if chartData.count > 0{
             let path = UIBezierPath()
             path.moveToPoint(pointFromValue(chartData[0]))
@@ -69,11 +56,4 @@ class GraphView: UIView {
         return CGPoint(x: pointAxesCenter.x + (pointValue.x * scale), y: pointAxesCenter.y - (pointValue.y * scale))
     }
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
 }
