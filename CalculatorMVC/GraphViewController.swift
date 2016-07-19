@@ -13,21 +13,13 @@ struct value {
     var y : CGFloat = 1.0
 }
 
-class GraphPoint{
-    var x : CGFloat = 0.0
-    var y : CGFloat = 0.0
-}
-
 class GraphViewController: UIViewController {
     
     @IBOutlet private weak var graphView: GraphView!
     
     let defaults = NSUserDefaults.standardUserDefaults()
-    
     private var chartSettings = [AnyObject]()
-    
     typealias PropertyList = AnyObject
-    
     var settings : PropertyList {
         get {
             return chartSettings
@@ -42,23 +34,14 @@ class GraphViewController: UIViewController {
         printGraphData()
         
         if let settingsValues = defaults.objectForKey("graphCalcSettings") as? [AnyObject]{
-            if settingsValues.count == 3{
-                graphView?.scale = (settingsValues[0] as? CGFloat)!
-                graphView?.pointAxesCenter.x = (settingsValues[1] as? CGFloat)!
-                graphView?.pointAxesCenter.y = (settingsValues[2] as? CGFloat)!
+            for settingsValue in settingsValues{
+                if let scale = settingsValue as? CGFloat{
+                    graphView?.scale = scale
+                } else if let center = settingsValue as? NSString{
+                    graphView.pointAxesCenter = CGPointFromString(String(center))
+                }
             }
-//            for settingsValue in settingsValues{
-//                if let scale = settingsValue as? CGFloat{
-//                    graphView?.scale = scale
-//                } else if let center = settingsValue as? GraphPoint{
-//                    graphView?.pointAxesCenter.x = center.x
-//                    graphView?.pointAxesCenter.y = center.y
-//                }
-//            }
         }
-        chartSettings.append(graphView.scale)
-        chartSettings.append(graphView.pointAxesCenter.x)
-        chartSettings.append(graphView.pointAxesCenter.y)
     }
     
     private var previousGraphScale : CGFloat = 0.0
@@ -72,13 +55,8 @@ class GraphViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(true)
-        
-        if chartSettings.count == 3{
-            chartSettings[0] = graphView.scale
-            chartSettings[1] = graphView.pointAxesCenter.x
-            chartSettings[2] = graphView.pointAxesCenter.y
-        }
-        
+        chartSettings.append(graphView.scale)
+        chartSettings.append(NSStringFromCGPoint(graphView.pointAxesCenter))
         defaults.setObject(settings, forKey: "graphCalcSettings")
     }
     
