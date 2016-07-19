@@ -9,8 +9,8 @@
 import UIKit
 
 struct value {
-    var x : CGFloat = 1.0
-    var y : CGFloat = 1.0
+    var x : CGFloat = 0.0
+    var y : CGFloat = 0.0
 }
 
 class GraphViewController: UIViewController {
@@ -38,7 +38,7 @@ class GraphViewController: UIViewController {
                 if let scale = settingsValue as? CGFloat{
                     graphView?.scale = scale
                 } else if let center = settingsValue as? NSString{
-                    graphView.pointAxesCenter = CGPointFromString(String(center))
+                    graphView?.pointAxesCenter = CGPointFromString(String(center))
                 }
             }
         }
@@ -73,7 +73,7 @@ class GraphViewController: UIViewController {
     
     @IBAction private func tap(recognizer: UITapGestureRecognizer) {
         if recognizer.state == .Ended{
-            graphView.pointAxesCenter = recognizer.locationInView(graphView)
+            graphView?.pointAxesCenter = recognizer.locationInView(graphView)
             printGraphData()
         }
     }
@@ -85,8 +85,8 @@ class GraphViewController: UIViewController {
         case .Began:
             previousPanCoordinates = recognizer.locationInView(graphView)
         case .Changed, .Ended:
-            graphView.graphOriginPointX += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
-            graphView.graphOriginPointY += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
+            graphView?.graphOriginPointX += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
+            graphView?.graphOriginPointY += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
             previousPanCoordinates = recognizer.locationInView(graphView)
             printGraphData()
         default:
@@ -109,7 +109,7 @@ class GraphViewController: UIViewController {
                     graphData.append(value(x: xValue, y: yValue))
                 }
             }
-            graphView.chartData = graphData
+            graphView?.chartData = graphData
             print("X min  : \( xMin )")
             print("X max  : \( xMax )")
             print("Y max : \(graphView.graphOriginPointY / graphView.scale)")
