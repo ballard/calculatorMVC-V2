@@ -118,4 +118,15 @@ class GraphViewController: UIViewController {
             print("Graph scale: \(graphView.scale)")
         }
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let graphpopvc = segue.destinationViewController.contentViewController as? GraphPopOverViewController{
+            graphpopvc.navigationItem.title = "Chart properties"
+            graphpopvc.xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
+            graphpopvc.xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
+            graphpopvc.yMin = -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale
+            graphpopvc.yMax = graphView.graphOriginPointY / graphView.scale
+            graphpopvc.scale = graphView.scale
+        }
+    }
 }

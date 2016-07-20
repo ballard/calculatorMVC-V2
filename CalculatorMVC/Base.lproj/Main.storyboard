@@ -475,7 +475,15 @@
                             <outletCollection property="gestureRecognizers" destination="9Yz-9h-FNC" appends="YES" id="VRm-G1-Gr6"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="default" id="1sg-2c-eIe"/>
+                    <navigationItem key="navigationItem" title="default" id="1sg-2c-eIe">
+                        <barButtonItem key="rightBarButtonItem" title="ⓘ" id="9Xp-LR-oxO">
+                            <connections>
+                                <segue destination="WF2-NS-109" kind="popoverPresentation" identifier="Show Popover" popoverAnchorBarButtonItem="9Xp-LR-oxO" id="nUD-6v-CtO">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="graphView" destination="fXm-Zn-bLE" id="8SP-Tw-Y9L"/>
                     </connections>
@@ -498,6 +506,82 @@
                 </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1955" y="863"/>
+        </scene>
+        <!--Graph Pop Over View Controller-->
+        <scene sceneID="2aZ-gW-Ziz">
+            <objects>
+                <viewController id="N3J-Fj-Rih" customClass="GraphPopOverViewController" customModule="CalculatorMVC" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="F3v-kn-62r"/>
+                        <viewControllerLayoutGuide type="bottom" id="gmz-Vz-csx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="veh-AE-Hr3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="BMM-pX-ZH3">
+                                <rect key="frame" x="250" y="192" width="100" height="215"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scale: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9DV-zL-8Pw">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Y-max: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ygr-4b-s8M">
+                                        <rect key="frame" x="0.0" y="45" width="100" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Y-min: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWi-Ll-88l">
+                                        <rect key="frame" x="0.0" y="90" width="100" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X-max: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVk-08-Fth">
+                                        <rect key="frame" x="0.0" y="135" width="100" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X-min: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWo-dn-Njp">
+                                        <rect key="frame" x="0.0" y="180" width="100" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                        <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="BMM-pX-ZH3" firstAttribute="centerY" secondItem="veh-AE-Hr3" secondAttribute="centerY" id="tog-Wc-c2w"/>
+                            <constraint firstItem="BMM-pX-ZH3" firstAttribute="centerX" secondItem="veh-AE-Hr3" secondAttribute="centerX" id="vyL-0t-5dF"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="MqB-8y-UDR" appends="YES" id="Hm4-h9-PbV"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="abq-56-zog"/>
+                    <connections>
+                        <outlet property="scaleLabel" destination="9DV-zL-8Pw" id="HgA-nY-Mxd"/>
+                        <outlet property="xMaxLabel" destination="YVk-08-Fth" id="gxd-BX-YVW"/>
+                        <outlet property="xMinLabel" destination="fWo-dn-Njp" id="ygi-vz-PMb"/>
+                        <outlet property="yMaxLabel" destination="ygr-4b-s8M" id="wnM-cU-rEp"/>
+                        <outlet property="yMinLabel" destination="OWi-Ll-88l" id="Ia1-bQ-4w0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bTu-K8-FAk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="MqB-8y-UDR">
+                    <connections>
+                        <action selector="closingTap:" destination="N3J-Fj-Rih" id="qgz-gf-vAb"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="3684" y="817"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o5h-bp-WJ7">
@@ -534,6 +618,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WR-Jm-vDi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1143" y="863"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="PWC-wc-iQZ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WF2-NS-109" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6g1-81-Pbo">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="N3J-Fj-Rih" kind="relationship" relationship="rootViewController" id="tfP-4s-tx6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tbg-Zc-TuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2872" y="817"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
