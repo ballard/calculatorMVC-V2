@@ -64,10 +64,5 @@ class GraphView: UIView {
             }
         }
         path.stroke()
-    }
-    
-    private func pointFromValue ( pointValue : value ) -> CGPoint {
-        return CGPoint(x: pointAxesCenter.x + (pointValue.x * scale), y: pointAxesCenter.y - (pointValue.y * scale))
-    }
-    
+    }    
 }

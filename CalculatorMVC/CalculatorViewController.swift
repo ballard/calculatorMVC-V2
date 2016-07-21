@@ -13,10 +13,31 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     @IBOutlet private weak var display: UILabel!
     @IBOutlet weak var history: UILabel!
     
+    @IBOutlet weak var graphButton: UIButton!
+    
     private let decimalSeparator = NSNumberFormatter().decimalSeparator
     private let numberStyle = NSNumberFormatter()
     
-    private var userIsInTheMiddleOfTypingANumber = false
+    private var userIsInTheMiddleOfTypingANumber = false{
+        didSet{
+            if userIsInTheMiddleOfTypingANumber{
+                print("disable")
+                graphButton!.enabled = false
+                graphButton!.setTitle("📈", forState: UIControlState.Normal)
+            } else {
+                graphButton!.enabled = true
+                graphButton!.setTitle("📉", forState: UIControlState.Normal)
+                print("enable")
+            }
+        }
+    }
+    
+    var partialResultWatcher : Bool{
+        get{
+            return brain.isPartialResult
+        }
+    }
+    
     private var brain = CalculatorBrain()
     
     private var displayValue: Double? {

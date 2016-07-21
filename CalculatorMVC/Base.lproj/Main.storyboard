@@ -407,6 +407,7 @@
                     <navigationItem key="navigationItem" title="Calculator View" id="QPI-Lj-XQv"/>
                     <connections>
                         <outlet property="display" destination="bHw-e3-hc2" id="YCW-fY-FZK"/>
+                        <outlet property="graphButton" destination="OjA-4D-HhW" id="9DJ-rQ-4jI"/>
                         <outlet property="history" destination="cZX-gj-K02" id="FT6-Om-y4F"/>
                     </connections>
                 </viewController>
