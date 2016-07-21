@@ -51,10 +51,10 @@ class GraphView: UIView {
         UIColor.blueColor().setStroke()
         var yGraphPoint : CGFloat = 0.0
         var isFirstValue = false
-        for valueIndex in 0..<Int(bounds.maxX){
+        for valueIndex in 0..<Int(bounds.maxX * contentScaleFactor){
             xGraphPoint = CGFloat(valueIndex)
             if let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero {
-                yGraphPoint = pointAxesCenter.y - (yValue * scale)
+                yGraphPoint = (pointAxesCenter.y - (yValue * scale))
                 if isFirstValue{
                     path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
                 } else {
