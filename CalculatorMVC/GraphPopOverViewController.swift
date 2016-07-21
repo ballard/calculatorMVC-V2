@@ -16,25 +16,21 @@ class GraphPopOverViewController: UIViewController {
             scaleLabel.text! += String(scale)
         }
     }
-    
     @IBOutlet weak var yMaxLabel: UILabel!{
         didSet{
             yMaxLabel.text! += String(yMax)
         }
     }
-    
     @IBOutlet weak var yMinLabel: UILabel!{
         didSet{
             yMinLabel.text! += String(yMin)
         }
     }
-    
     @IBOutlet weak var xMaxLabel: UILabel!{
         didSet{
             xMaxLabel.text! += String(xMax)
         }
     }
-    
     @IBOutlet weak var xMinLabel: UILabel!{
         didSet{
             xMinLabel.text! += String(xMin)

@@ -114,7 +114,7 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
             graphvc.navigationItem.title = brain.description
-            graphvc.chartFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
+            graphvc.graphFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
                 weakSelf?.brain.variableValues["M"] = Double(inputValue)
                 if let result = weakSelf?.brain.result{
                     return CGFloat(result)

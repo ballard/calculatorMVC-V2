@@ -12,7 +12,12 @@ import UIKit
 class GraphView: UIView {
     
     private let Axes = AxesDrawer()
-    var chartData = [value]()
+    
+    var graphFunc : ((CGFloat) -> CGFloat)? = nil
+    
+    var xGraphPoint  : CGFloat = 0.0
+    
+    var xValue : CGFloat { get { return (xGraphPoint - pointAxesCenter.x) / scale } }
     
     @IBInspectable
     var scale : CGFloat = 1.0 { didSet { setNeedsDisplay() } }
@@ -41,15 +46,24 @@ class GraphView: UIView {
     
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
-        if chartData.count > 0{
-            let path = UIBezierPath()
-            path.moveToPoint(pointFromValue(chartData[0]))
-            for valueIndex in 1..<chartData.count {
-                path.addLineToPoint(pointFromValue(chartData[valueIndex]))
+        let path = UIBezierPath()
+        path.lineWidth = 3.0
+        UIColor.blueColor().setStroke()
+        var yGraphPoint : CGFloat = 0.0
+        var isFirstValue = false
+        for valueIndex in 0..<Int(bounds.maxX){
+            xGraphPoint = CGFloat(valueIndex)
+            if let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero {
+                yGraphPoint = pointAxesCenter.y - (yValue * scale)
+                if isFirstValue{
+                    path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
+                } else {
+                    path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
+                    isFirstValue = true
+                }
             }
-            path.lineWidth = 3.0
-            path.stroke()
         }
+        path.stroke()
     }
     
     private func pointFromValue ( pointValue : value ) -> CGPoint {

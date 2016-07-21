@@ -15,23 +15,26 @@ struct value {
 
 class GraphViewController: UIViewController {
     
-    @IBOutlet private weak var graphView: GraphView!
-    
-    let defaults = NSUserDefaults.standardUserDefaults()
-    private var chartSettings = [AnyObject]()
-    typealias PropertyList = AnyObject
-    var settings : PropertyList {
-        get {
-            return chartSettings
+    @IBOutlet private weak var graphView: GraphView!{
+        didSet{
+            graphView?.graphFunc = graphFunc
         }
     }
     
-    var chartFunc : ((CGFloat) -> CGFloat)? = nil
+    let defaults = NSUserDefaults.standardUserDefaults()
+    private var graphSettings = [AnyObject]()
+    typealias PropertyList = AnyObject
+    var settings : PropertyList {
+        get {
+            return graphSettings
+        }
+    }
+    
+    var graphFunc : ((CGFloat) -> CGFloat)? = nil
     
     override internal func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         graphView?.pointAxesCenter =  CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)
-        printGraphData()
         
         if let settingsValues = defaults.objectForKey("graphCalcSettings") as? [AnyObject]{
             for settingsValue in settingsValues{
@@ -55,8 +58,8 @@ class GraphViewController: UIViewController {
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(true)
-        chartSettings.append(graphView.scale)
-        chartSettings.append(NSStringFromCGPoint(graphView.pointAxesCenter))
+        graphSettings.append(graphView.scale)
+        graphSettings.append(NSStringFromCGPoint(graphView.pointAxesCenter))
         defaults.setObject(settings, forKey: "graphCalcSettings")
     }
     
@@ -65,7 +68,6 @@ class GraphViewController: UIViewController {
         case .Changed,.Ended:
             graphView?.scale *= recognizer.scale
             recognizer.scale = 1.0
-            printGraphData ()
         default:
             break
         }
@@ -74,7 +76,6 @@ class GraphViewController: UIViewController {
     @IBAction private func tap(recognizer: UITapGestureRecognizer) {
         if recognizer.state == .Ended{
             graphView?.pointAxesCenter = recognizer.locationInView(graphView)
-            printGraphData()
         }
     }
     
@@ -88,40 +89,14 @@ class GraphViewController: UIViewController {
             graphView?.graphOriginPointX += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
             graphView?.graphOriginPointY += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
             previousPanCoordinates = recognizer.locationInView(graphView)
-            printGraphData()
         default:
             break
-        }
-    }
-
-    private func printGraphData() {
-        if let function = chartFunc {
-            let chartPoints = graphView.bounds.maxX
-            let xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
-            let xMax = (chartPoints - graphView.graphOriginPointX) / graphView.scale
-            let xDelta = xMax - xMin
-            let xStep = xDelta/CGFloat(chartPoints)
-            var graphData = [value]()
-            for graphIndex in 1...Int(chartPoints){
-                let xValue = xMin + (xStep * CGFloat(graphIndex))
-                let yValue = function(xValue)
-                if yValue.isNormal || yValue.isZero {
-                    graphData.append(value(x: xValue, y: yValue))
-                }
-            }
-            graphView?.chartData = graphData
-            print("X min  : \( xMin )")
-            print("X max  : \( xMax )")
-            print("Y max : \(graphView.graphOriginPointY / graphView.scale)")
-            print("Y min  : \( -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale))")
-            print("X points : \(graphView.bounds.maxX * graphView.scale)")
-            print("Graph scale: \(graphView.scale)")
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphpopvc = segue.destinationViewController.contentViewController as? GraphPopOverViewController{
-            graphpopvc.navigationItem.title = "Chart properties"
+            graphpopvc.navigationItem.title = "Graph properties"
             graphpopvc.xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
             graphpopvc.xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
             graphpopvc.yMin = -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale
