@@ -122,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490352406.627307"
+            timestampString = "490825009.429223"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
-            landmarkName = "shouldPerformSegueWithIdentifier(_:sender:)"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "clear()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -138,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490352406.627307"
+            timestampString = "490825009.429223"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "shouldPerformSegueWithIdentifier(_:sender:)"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
+            landmarkName = "clear()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -123,7 +123,13 @@ class CalculatorBrain
         return accumulator
     }
     
-    private var pending: pendingBinaryOperationInfo?
+    var delegate : CalculatorBrainDelegate?
+    
+    private var pending: pendingBinaryOperationInfo?{
+        didSet{
+            delegate?.trackPending(pending != nil ? true : false)
+        }
+    }
     
     private struct pendingBinaryOperationInfo {
         var binaryFunction: (Double, Double) -> Double

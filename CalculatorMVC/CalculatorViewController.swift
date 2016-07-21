@@ -8,7 +8,12 @@
 
 import UIKit
 
-class CalculatorViewController: UIViewController, UISplitViewControllerDelegate {
+
+protocol CalculatorBrainDelegate {
+    func trackPending( value: Bool)
+}
+
+class CalculatorViewController: UIViewController, UISplitViewControllerDelegate, CalculatorBrainDelegate {
 
     @IBOutlet private weak var display: UILabel!
     @IBOutlet weak var history: UILabel!
@@ -18,17 +23,15 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
     private let decimalSeparator = NSNumberFormatter().decimalSeparator
     private let numberStyle = NSNumberFormatter()
     
-    private var userIsInTheMiddleOfTypingANumber = false{
-        didSet{
-            if userIsInTheMiddleOfTypingANumber{
-                print("disable")
-                graphButton!.enabled = false
-                graphButton!.setTitle("📈", forState: UIControlState.Normal)
-            } else {
-                graphButton!.enabled = true
-                graphButton!.setTitle("📉", forState: UIControlState.Normal)
-                print("enable")
-            }
+    private var userIsInTheMiddleOfTypingANumber = false
+    
+    func trackPending(value: Bool) {
+        if value {
+            graphButton!.enabled = false
+            graphButton!.setTitle("📈", forState: UIControlState.Normal)
+        } else {
+            graphButton!.enabled = true
+            graphButton!.setTitle("📉", forState: UIControlState.Normal)
         }
     }
     
@@ -61,6 +64,7 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate 
         numberStyle.maximumFractionDigits = 6
         numberStyle.notANumberSymbol = "Error"
         splitViewController?.delegate = self
+        brain.delegate = self
     }
     
     @IBAction func backSpace(sender: AnyObject) {
