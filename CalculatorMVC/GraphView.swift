@@ -13,7 +13,7 @@ class GraphView: UIView {
     
     private let Axes = AxesDrawer()
     
-    var graphFunc : ((CGFloat) -> CGFloat)? = nil { didSet { setNeedsDisplay() } }
+    var graphFunc : ((CGFloat) -> CGFloat)? { didSet { setNeedsDisplay() } }
     
     var xGraphPoint  : CGFloat = 0.0
     

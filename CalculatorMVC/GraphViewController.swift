@@ -25,7 +25,7 @@ class GraphViewController: UIViewController {
         }
     }
     
-    var graphFunc : ((CGFloat) -> CGFloat)? = nil
+    var graphFunc : ((CGFloat) -> CGFloat)?
     
     override internal func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
