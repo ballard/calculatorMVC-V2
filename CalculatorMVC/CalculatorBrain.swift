@@ -160,7 +160,6 @@ class CalculatorBrain
         accumulator = 0.0
         internalProgram = []
         descriptionAccumulator = "0"
-//        currentVariable = ""
     }
     
     typealias PropertyList = AnyObject
@@ -177,7 +176,6 @@ class CalculatorBrain
                         self.setOperand(operand)
                     }
                     else if let operation = op as? String{
-//                        currentVariable = operation
                         self.performOperation(operation)
                     }
                 }

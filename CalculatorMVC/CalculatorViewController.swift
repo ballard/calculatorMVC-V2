@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 protocol CalculatorBrainDelegate {
     func trackPending( value: Bool)
 }
@@ -27,19 +26,19 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
     
     private var userIsInTheMiddleOfTypingANumber = false
     
-    let defaults = NSUserDefaults.standardUserDefaults()
+    private let defaults = NSUserDefaults.standardUserDefaults()
     
     private var settings = [AnyObject]()
     
     typealias PropertyList = AnyObject
     
-    var isAppLoaded = false
-    
-    var settingsProgram : PropertyList{
+    private var settingsProgram : PropertyList{
         get {
             return settings
         }
     }
+    
+    private var isAppLoaded = false
     
     func trackPending(value: Bool) {
         if value {
@@ -48,12 +47,6 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         } else {
             graphButton!.enabled = true
             graphButton!.setTitle("📉", forState: UIControlState.Normal)
-        }
-    }
-    
-    var partialResultWatcher : Bool{
-        get{
-            return brain.isPartialResult
         }
     }
     
@@ -95,7 +88,6 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         }
         isAppLoaded = true
     }
-    
     
     @IBAction func backSpace(sender: AnyObject) {
         if userIsInTheMiddleOfTypingANumber{
@@ -141,7 +133,6 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         history.text = brain.description + (brain.isPartialResult ? "..." : "=")
     }
     
-
     @IBAction func setVariable() {
         if let operand = displayValue{
             brain.variableValues["M"] = operand
