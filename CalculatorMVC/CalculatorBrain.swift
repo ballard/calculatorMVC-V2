@@ -58,6 +58,7 @@ class CalculatorBrain
     }
     
     private var operations = [
+        "M" : Operation.Variable,
         "I" : Operation.Random(drand48()),
         "π" : Operation.Constant(M_PI),
         "e" : Operation.Constant(M_E),
@@ -157,7 +158,7 @@ class CalculatorBrain
     func clear(){
         pending = nil
         accumulator = 0.0
-        internalProgram.removeAll()
+        internalProgram = []
         descriptionAccumulator = "0"
 //        currentVariable = ""
     }

@@ -16,14 +16,35 @@ protocol CalculatorBrainDelegate {
 class CalculatorViewController: UIViewController, UISplitViewControllerDelegate, CalculatorBrainDelegate {
 
     @IBOutlet private weak var display: UILabel!
+    
     @IBOutlet weak var history: UILabel!
     
-    @IBOutlet weak var graphButton: UIButton!
+    @IBOutlet weak var graphButton: UIButton!{
+        didSet{
+            graphButton!.enabled = false
+            graphButton!.setTitle("📈", forState: UIControlState.Normal)
+        }
+    }
     
     private let decimalSeparator = NSNumberFormatter().decimalSeparator
+    
     private let numberStyle = NSNumberFormatter()
     
     private var userIsInTheMiddleOfTypingANumber = false
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    private var settings = [AnyObject]()
+    
+    typealias PropertyList = AnyObject
+    
+    var isAppLoaded = false
+    
+    var settingsProgram : PropertyList{
+        get {
+            return settings
+        }
+    }
     
     func trackPending(value: Bool) {
         if value {
@@ -66,6 +87,20 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         splitViewController?.delegate = self
         brain.delegate = self
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isAppLoaded{
+            if let settingsValues = defaults.objectForKey("calcSettings") as? [AnyObject] where settingsValues.count > 0 {
+                print("loading setup: \(settingsValues.last!)")
+                brain.program = settingsValues.last!
+                displayValue = brain.result
+                history.text = brain.description + (brain.isPartialResult ? "..." : "=")
+                performSegueWithIdentifier("graph", sender: nil)            }
+        }
+        isAppLoaded = true
+    }
+    
     
     @IBAction func backSpace(sender: AnyObject) {
         if userIsInTheMiddleOfTypingANumber{
@@ -134,6 +169,8 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         displayValue = nil
         history.text = " "
         userIsInTheMiddleOfTypingANumber = false
+        settings = []
+        defaults.removeObjectForKey("calcSettings")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -147,6 +184,11 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
                     return 0.0
                 }
             })
+            settings = []
+            settings.append(brain.program)
+            defaults.removeObjectForKey("calcSettings")
+            defaults.setObject(settingsProgram, forKey: "calcSettings")
+            print("settings saved: \(settings) program: \(brain.program)")
         }
     }
     
@@ -166,6 +208,5 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         }
         return false
     }
-    
 }
 
