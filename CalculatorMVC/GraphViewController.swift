@@ -81,8 +81,8 @@ class GraphViewController: UIViewController {
         case .Began:
             previousPanCoordinates = recognizer.locationInView(graphView)
         case .Changed, .Ended:
-            graphView?.graphOriginPointX += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
-            graphView?.graphOriginPointY += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
+            graphView?.pointAxesCenter.x += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
+            graphView?.pointAxesCenter.y += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
             previousPanCoordinates = recognizer.locationInView(graphView)
         default:
             break
@@ -92,10 +92,10 @@ class GraphViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphpopvc = segue.destinationViewController.contentViewController as? GraphPopOverViewController{
             graphpopvc.navigationItem.title = "Graph properties"
-            graphpopvc.xMin = -1 * ( graphView.graphOriginPointX / graphView.scale)
-            graphpopvc.xMax = (graphView.bounds.maxX - graphView.graphOriginPointX) / graphView.scale
-            graphpopvc.yMin = -1 * (graphView.bounds.maxY - graphView.graphOriginPointY) / graphView.scale
-            graphpopvc.yMax = graphView.graphOriginPointY / graphView.scale
+            graphpopvc.xMin = -1 * ( graphView.pointAxesCenter.x / graphView.scale)
+            graphpopvc.xMax = (graphView.bounds.maxX - graphView.pointAxesCenter.x) / graphView.scale
+            graphpopvc.yMin = -1 * (graphView.bounds.maxY - graphView.pointAxesCenter.x) / graphView.scale
+            graphpopvc.yMax = graphView.pointAxesCenter.y / graphView.scale
             graphpopvc.scale = graphView.scale
         }
     }

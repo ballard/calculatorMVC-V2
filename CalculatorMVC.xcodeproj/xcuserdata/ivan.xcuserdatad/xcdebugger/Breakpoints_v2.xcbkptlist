@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490828571.295055"
+            timestampString = "490914019.781956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "operate(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/GraphView.swift"
-            timestampString = "490745643.060868"
+            timestampString = "490918052.141521"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "drawRect(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490828571.295055"
+            timestampString = "490914019.781956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "CalculatorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490828571.295055"
+            timestampString = "490914019.781956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "CalculatorViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490828967.212495"
+            timestampString = "490914019.781956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "156"
-            endingLineNumber = "156"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "getVariable(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CalculatorMVC/CalculatorViewController.swift"
-            timestampString = "490828958.260954"
+            timestampString = "490914019.781956"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "CalculatorViewController"
             landmarkType = "3">
          </BreakpointContent>

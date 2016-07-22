@@ -13,7 +13,7 @@ class GraphView: UIView {
     
     private let Axes = AxesDrawer()
     
-    var graphFunc : ((CGFloat) -> CGFloat)? = nil
+    var graphFunc : ((CGFloat) -> CGFloat)? = nil { didSet { setNeedsDisplay() } }
     
     var xGraphPoint  : CGFloat = 0.0
     
@@ -22,27 +22,16 @@ class GraphView: UIView {
     @IBInspectable
     var scale : CGFloat = 1.0 { didSet { setNeedsDisplay() } }
     
-    @IBInspectable
-    var graphOriginPointX : CGFloat {
-        get {
-            return pointAxesCenter.x
+    var pointAxesCenterStored : CGPoint?  { didSet {setNeedsDisplay() } }
+    
+    var pointAxesCenter : CGPoint{
+        get{
+            return pointAxesCenterStored ?? CGPoint(x: bounds.midX, y: bounds.midY)
         }
-        set {
-            pointAxesCenter.x = newValue
+        set{
+            pointAxesCenterStored = newValue
         }
     }
-    
-    @IBInspectable
-    var graphOriginPointY: CGFloat {
-        get {
-            return pointAxesCenter.y
-        }
-        set {
-            pointAxesCenter.y = newValue
-        }
-    }
-    
-    var pointAxesCenter = CGPoint(x: 0.0, y: 0.0) { didSet {setNeedsDisplay() } }
     
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
@@ -52,7 +41,7 @@ class GraphView: UIView {
         var yGraphPoint : CGFloat = 0.0
         var isFirstValue = false
         for valueIndex in 0..<Int(bounds.maxX * contentScaleFactor){
-            xGraphPoint = CGFloat(valueIndex)
+            xGraphPoint = CGFloat(valueIndex) / contentScaleFactor
             if let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero {
                 yGraphPoint = (pointAxesCenter.y - (yValue * scale))
                 if isFirstValue{

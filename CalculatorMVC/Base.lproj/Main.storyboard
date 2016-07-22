@@ -441,7 +441,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXm-Zn-bLE" customClass="GraphView" customModule="CalculatorMVC" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <userDefinedRuntimeAttributes>
@@ -467,10 +467,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="3u9-10-xZZ"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="EKn-af-oRw"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="QLF-6b-5gD" secondAttribute="top" id="RJR-fD-9I1"/>
-                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="bottom" secondItem="w1p-f0-Zx6" secondAttribute="top" id="Y9k-lk-Qtf"/>
+                            <constraint firstAttribute="trailing" secondItem="fXm-Zn-bLE" secondAttribute="trailing" id="I2u-9n-pg0"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="top" secondItem="Akr-3O-dpT" secondAttribute="bottom" id="MjR-J3-NTh"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="bottom" secondItem="w1p-f0-Zx6" secondAttribute="top" id="Mtf-mT-erI"/>
+                            <constraint firstItem="fXm-Zn-bLE" firstAttribute="leading" secondItem="QLF-6b-5gD" secondAttribute="leading" id="q3E-nr-8Bu"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="9Yz-9h-FNC" appends="YES" id="VRm-G1-Gr6"/>
