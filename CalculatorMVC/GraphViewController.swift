@@ -8,11 +8,6 @@
 
 import UIKit
 
-struct value {
-    var x : CGFloat = 0.0
-    var y : CGFloat = 0.0
-}
-
 class GraphViewController: UIViewController {
     
     @IBOutlet private weak var graphView: GraphView!{

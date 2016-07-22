@@ -38,13 +38,6 @@ class GraphPopOverViewController: UIViewController {
     }
     
     var xMin : CGFloat = 0.0, xMax : CGFloat = 0.0, yMin : CGFloat = 0.0, yMax : CGFloat = 0.0, scale : CGFloat = 0.0
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }    
 
     @IBAction func closingTap(recoznizer: UITapGestureRecognizer) {
         if recoznizer.state == .Ended{

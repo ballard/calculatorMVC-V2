@@ -19,12 +19,7 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
     
     @IBOutlet weak var history: UILabel!
     
-    @IBOutlet weak var graphButton: UIButton!{
-        didSet{
-            graphButton!.enabled = false
-            graphButton!.setTitle("📈", forState: UIControlState.Normal)
-        }
-    }
+    @IBOutlet weak var graphButton: UIButton!
     
     private let decimalSeparator = NSNumberFormatter().decimalSeparator
     
@@ -186,7 +181,6 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
             })
             settings = []
             settings.append(brain.program)
-            defaults.removeObjectForKey("calcSettings")
             defaults.setObject(settingsProgram, forKey: "calcSettings")
             print("settings saved: \(settings) program: \(brain.program)")
         }
