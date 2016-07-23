@@ -10,17 +10,16 @@ import UIKit
 
 @IBDesignable
 class GraphView: UIView {
+    @IBInspectable
+    var scale : CGFloat = 50.0 { didSet { setNeedsDisplay() } }
+    @IBInspectable
+    var graphLineWidth : CGFloat = 3.0 { didSet { setNeedsDisplay() } }
+    @IBInspectable
+    var graphColor : UIColor = UIColor.redColor() { didSet { setNeedsDisplay() } }
     
     private let Axes = AxesDrawer()
     
     var graphFunc : ((CGFloat) -> CGFloat)? { didSet { setNeedsDisplay() } }
-    
-    var xGraphPoint  : CGFloat = 0.0
-    
-    var xValue : CGFloat { get { return (xGraphPoint - pointAxesCenter.x) / scale } }
-    
-    @IBInspectable
-    var scale : CGFloat = 1.0 { didSet { setNeedsDisplay() } }
     
     var pointAxesCenterStored : CGPoint?  { didSet {setNeedsDisplay() } }
     
@@ -35,10 +34,11 @@ class GraphView: UIView {
     
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
+        var xGraphPoint  : CGFloat, yGraphPoint : CGFloat
+        var xValue : CGFloat { get { return (xGraphPoint - pointAxesCenter.x) / scale } }
         let path = UIBezierPath()
-        path.lineWidth = 3.0
-        UIColor.blueColor().setStroke()
-        var yGraphPoint : CGFloat = 0.0
+        path.lineWidth = graphLineWidth
+        graphColor.setStroke()
         var isFirstValue = false
         for valueIndex in 0..<Int(bounds.maxX * contentScaleFactor){
             xGraphPoint = CGFloat(valueIndex) / contentScaleFactor
