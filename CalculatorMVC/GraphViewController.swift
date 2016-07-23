@@ -25,7 +25,11 @@ class GraphViewController: UIViewController {
         }
     }
     
-    var graphFunc : ((CGFloat) -> CGFloat)?
+    var graphFunc : ((CGFloat) -> CGFloat)? {
+        didSet{
+            graphView?.graphFunc = graphFunc
+        }
+    }
     
     override internal func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
@@ -49,6 +53,7 @@ class GraphViewController: UIViewController {
         super.viewWillLayoutSubviews()
         previousGraphScale = graphView.scale
         previousGraphOrigin = graphView.pointAxesCenter
+        graphView.setNeedsDisplay()
     }
     
     override func viewDidDisappear(animated: Bool) {

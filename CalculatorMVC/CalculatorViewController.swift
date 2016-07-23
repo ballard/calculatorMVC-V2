@@ -84,7 +84,7 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
                 brain.program = settingsValues.last!
                 displayValue = brain.result
                 history.text = brain.description + (brain.isPartialResult ? "..." : "=")
-                performSegueWithIdentifier("graph", sender: nil)            }
+                performSegueWithIdentifier("Show Graph", sender: nil)            }
         }
         isAppLoaded = true
     }
@@ -159,21 +159,33 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         defaults.removeObjectForKey("calcSettings")
     }
     
+    private func performSegue(graphvc : GraphViewController){
+        graphvc.navigationItem.title = brain.description
+        graphvc.graphFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
+            weakSelf?.brain.variableValues["M"] = Double(inputValue)
+            if let result = weakSelf?.brain.result{
+                return CGFloat(result)
+            } else {
+                return 0.0
+            }
+            })
+        settings = []
+        settings.append(brain.program)
+        defaults.setObject(settingsProgram, forKey: "calcSettings")
+        print("settings saved: \(settings) program: \(brain.program)")
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
-            graphvc.navigationItem.title = brain.description
-            graphvc.graphFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
-                weakSelf?.brain.variableValues["M"] = Double(inputValue)
-                if let result = weakSelf?.brain.result{
-                    return CGFloat(result)
-                } else {
-                    return 0.0
-                }
-            })
-            settings = []
-            settings.append(brain.program)
-            defaults.setObject(settingsProgram, forKey: "calcSettings")
-            print("settings saved: \(settings) program: \(brain.program)")
+            performSegue(graphvc)
+        }
+    }
+    
+    @IBAction func ShowGraph() {
+        if let graphvc = splitViewController?.viewControllers.last?.contentViewController as? GraphViewController{
+            performSegue(graphvc)
+        } else {
+            performSegueWithIdentifier("Show Graph", sender: nil)
         }
     }
     

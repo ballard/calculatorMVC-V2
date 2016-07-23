@@ -10,6 +10,7 @@ import UIKit
 
 @IBDesignable
 class GraphView: UIView {
+    
     @IBInspectable
     var scale : CGFloat = 50.0 { didSet { setNeedsDisplay() } }
     @IBInspectable
@@ -22,7 +23,6 @@ class GraphView: UIView {
     var graphFunc : ((CGFloat) -> CGFloat)? { didSet { setNeedsDisplay() } }
     
     var pointAxesCenterStored : CGPoint?  { didSet {setNeedsDisplay() } }
-    
     var pointAxesCenter : CGPoint{
         get{
             return pointAxesCenterStored ?? CGPoint(x: bounds.midX, y: bounds.midY)

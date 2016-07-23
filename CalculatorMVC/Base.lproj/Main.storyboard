@@ -150,7 +150,7 @@
                                                             <color key="titleColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <segue destination="JFm-lw-1ZL" kind="showDetail" identifier="graph" id="p1U-Bh-Mwj"/>
+                                                            <action selector="ShowGraph" destination="BYZ-38-t0r" eventType="touchUpInside" id="qzX-Yl-Div"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -409,11 +409,12 @@
                         <outlet property="display" destination="bHw-e3-hc2" id="YCW-fY-FZK"/>
                         <outlet property="graphButton" destination="OjA-4D-HhW" id="9DJ-rQ-4jI"/>
                         <outlet property="history" destination="cZX-gj-K02" id="FT6-Om-y4F"/>
+                        <segue destination="JFm-lw-1ZL" kind="show" identifier="Show Graph" id="sRg-yu-W8I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1955" y="27"/>
+            <point key="canvasLocation" x="339" y="559"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="NTy-bx-WkG">
@@ -426,7 +427,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lhi-BP-YQ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6" y="485"/>
+            <point key="canvasLocation" x="-1254" y="1361"/>
         </scene>
         <!--default-->
         <scene sceneID="Tc9-lw-EV4">
@@ -597,7 +598,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Nz-Re-Hac" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="27"/>
+            <point key="canvasLocation" x="-525" y="447"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eZz-rK-PG6">
@@ -615,7 +616,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5WR-Jm-vDi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1143" y="863"/>
+            <point key="canvasLocation" x="1115" y="771"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PWC-wc-iQZ">
@@ -637,6 +638,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="p1U-Bh-Mwj"/>
+        <segue reference="sRg-yu-W8I"/>
     </inferredMetricsTieBreakers>
 </document>
