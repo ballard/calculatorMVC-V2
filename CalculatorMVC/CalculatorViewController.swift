@@ -76,18 +76,19 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         brain.delegate = self
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if !isAppLoaded{
-            if let settingsValues = defaults.objectForKey("calcSettings") as? [AnyObject] where settingsValues.count > 0 {
-                print("loading setup: \(settingsValues.last!)")
-                brain.program = settingsValues.last!
-                displayValue = brain.result
-                history.text = brain.description + (brain.isPartialResult ? "..." : "=")
-                performSegueWithIdentifier("Show Graph", sender: nil)            }
-        }
-        isAppLoaded = true
-    }
+//    override func viewDidAppear(animated: Bool) {
+//        super.viewDidAppear(animated)
+//        if !isAppLoaded{
+//            if let settingsValues = defaults.objectForKey("calcSettings") as? [AnyObject] where settingsValues.count > 0 {
+//                print("loading setup: \(settingsValues.last!)")
+//                brain.program = settingsValues.last!
+//                displayValue = brain.result
+//                history.text = brain.description + (brain.isPartialResult ? "..." : "=")
+////                performSegueWithIdentifier("Show Graph", sender: nil)
+//            }
+//        }
+//        isAppLoaded = true
+//    }
     
     @IBAction func backSpace(sender: AnyObject) {
         if userIsInTheMiddleOfTypingANumber{
@@ -159,7 +160,7 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
         defaults.removeObjectForKey("calcSettings")
     }
     
-    private func performSegue(graphvc : GraphViewController){
+    private func prepareGraph(graphvc : GraphViewController){
         graphvc.navigationItem.title = brain.description
         graphvc.graphFunc = ({ [weak weakSelf = self] (inputValue: CGFloat) -> CGFloat in
             weakSelf?.brain.variableValues["M"] = Double(inputValue)
@@ -177,13 +178,13 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let graphvc = segue.destinationViewController.contentViewController as? GraphViewController{
-            performSegue(graphvc)
+            prepareGraph(graphvc)
         }
     }
     
     @IBAction func ShowGraph() {
         if let graphvc = splitViewController?.viewControllers.last?.contentViewController as? GraphViewController{
-            performSegue(graphvc)
+            prepareGraph(graphvc)
         } else {
             performSegueWithIdentifier("Show Graph", sender: nil)
         }
@@ -199,7 +200,15 @@ class CalculatorViewController: UIViewController, UISplitViewControllerDelegate,
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
         if primaryViewController.contentViewController == self{
-            if secondaryViewController.contentViewController is GraphViewController{
+            if let graphvc = secondaryViewController.contentViewController as? GraphViewController where graphvc.graphFunc == nil {
+                if let settingsValues = defaults.objectForKey("calcSettings") as? [AnyObject] where settingsValues.count > 0 {
+                    print("loading setup: \(settingsValues.last!)")
+                    brain.program = settingsValues.last!
+                    displayValue = brain.result
+                    history.text = brain.description + (brain.isPartialResult ? "..." : "=")
+                    prepareGraph(graphvc)
+                    return false
+                }
                 return true
             }
         }
