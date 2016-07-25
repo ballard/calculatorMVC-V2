@@ -53,7 +53,6 @@ class GraphViewController: UIViewController {
         super.viewWillLayoutSubviews()
         previousGraphScale = graphView.scale
         previousGraphOrigin = graphView.pointAxesCenter
-        graphView.setNeedsDisplay()
     }
     
     override func viewDidDisappear(animated: Bool) {
