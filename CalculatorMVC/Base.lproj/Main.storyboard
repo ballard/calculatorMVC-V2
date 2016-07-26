@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Calculator View-->
+        <!--Calculator-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="CalculatorViewController" customModule="CalculatorMVC" customModuleProvider="target" sceneMemberID="viewController">
@@ -404,7 +404,7 @@
                             <constraint firstAttribute="trailing" secondItem="h3A-by-BY3" secondAttribute="trailing" id="pR6-DA-wtr"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Calculator View" id="QPI-Lj-XQv"/>
+                    <navigationItem key="navigationItem" title="Calculator" id="QPI-Lj-XQv"/>
                     <connections>
                         <outlet property="display" destination="bHw-e3-hc2" id="YCW-fY-FZK"/>
                         <outlet property="graphButton" destination="OjA-4D-HhW" id="9DJ-rQ-4jI"/>
@@ -447,13 +447,13 @@
                                 <gestureRecognizers/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="scale">
-                                        <real key="value" value="5"/>
+                                        <real key="value" value="50"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="graphColor">
                                         <color key="value" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="graphLineWidth">
-                                        <real key="value" value="1"/>
+                                        <real key="value" value="2"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
