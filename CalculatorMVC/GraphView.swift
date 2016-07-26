@@ -39,18 +39,33 @@ class GraphView: UIView {
         let path = UIBezierPath()
         path.lineWidth = graphLineWidth
         graphColor.setStroke()
-        var isFirstValue = false
+        var isFirstValue = true
+        var previousYGraphPoint : CGFloat = 0.0
         for valueIndex in 0..<Int(bounds.maxX * contentScaleFactor){
             xGraphPoint = CGFloat(valueIndex) / contentScaleFactor
-            if let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero {
-                yGraphPoint = (pointAxesCenter.y - (yValue * scale))
-                if isFirstValue{
-                    path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
-                } else {
-                    path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
-                    isFirstValue = true
+            guard let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero else { continue }
+            yGraphPoint = (pointAxesCenter.y - (yValue * scale))
+            
+            if !isFirstValue{
+                
+                guard previousYGraphPoint < (bounds.height * 2) - abs(yGraphPoint) else {
+                    path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint)); continue
                 }
+                
+//                if previousYGraphPoint > (bounds.height * 2) - abs(yGraphPoint) {
+//                    path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint))
+//                } else {
+//                    path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
+//                }
+                
+                path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
+//                print("last X point: \(xGraphPoint), X max: \(bounds.maxX)")
+            } else {
+                path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint ))
+                isFirstValue = false
             }
+            previousYGraphPoint = yGraphPoint
+//            }
         }
         path.stroke()
     }    
