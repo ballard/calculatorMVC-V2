@@ -33,13 +33,13 @@ class GraphViewController: UIViewController {
         get{
             if let center = defaults.objectForKey(Keys.Center) as? String {
                 let relativeCenter = CGPointFromString(center)
-                return CGPoint(x: relativeCenter.x * graphView.bounds.maxX, y: relativeCenter.y * graphView.bounds.maxY)
+                return CGPoint(x: relativeCenter.x * graphView.bounds.midX, y: relativeCenter.y * graphView.bounds.midY)
             } else {
                 return CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)
             }
         }
         set{
-            defaults.setObject(NSStringFromCGPoint(CGPoint(x: newValue.x / graphView.bounds.maxX, y: newValue.y / graphView.bounds.maxY)), forKey: Keys.Center)
+            defaults.setObject(NSStringFromCGPoint(CGPoint(x: newValue.x / graphView.bounds.midX, y: newValue.y / graphView.bounds.midY)), forKey: Keys.Center)
         }
     }
     
