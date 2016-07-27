@@ -69,6 +69,8 @@ class GraphViewController: UIViewController {
         }
     }
     
+    var snapshot : UIView?
+    
     @IBAction private func zoom(recognizer: UIPinchGestureRecognizer) {
         switch recognizer.state {
         case .Changed,.Ended:
@@ -87,13 +89,29 @@ class GraphViewController: UIViewController {
     
     @IBAction private func pan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
-        case .Changed, .Ended:
+        case .Began:
+            graphView?.drawCurve = false
+            snapshot = graphView.snapshotViewAfterScreenUpdates(false)
+            snapshot!.alpha = 0.4
+            graphView?.addSubview(snapshot!)
+        case .Changed:
             let translation = recognizer.translationInView(graphView)
             if translation != CGPointZero{
                 graphView?.pointAxesCenter.x += translation.x
                 graphView?.pointAxesCenter.y += translation.y
                 recognizer.setTranslation(CGPointZero, inView: graphView)
             }
+        case .Ended:
+            graphView?.drawCurve = true
+            let translation = recognizer.translationInView(graphView)
+            if translation != CGPointZero{
+                graphView?.pointAxesCenter.x += translation.x
+                graphView?.pointAxesCenter.y += translation.y
+                recognizer.setTranslation(CGPointZero, inView: graphView)
+            }
+            snapshot!.removeFromSuperview()
+            snapshot = nil
+            graphView?.setNeedsDisplay()
         default:
             break
         }

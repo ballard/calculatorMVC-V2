@@ -40,6 +40,8 @@ class AxesDrawer
     // pointsPerUnit is essentially the "scale" of the axes
     // e.g. if you wanted there to be 100 points along an axis between -1 and 1,
     //    you'd set pointsPerUnit to 50
+    
+    var drawHashmarks : Bool = true
 
     func drawAxesInRect(bounds: CGRect, origin: CGPoint, pointsPerUnit: CGFloat)
     {
@@ -51,7 +53,9 @@ class AxesDrawer
         path.moveToPoint(CGPoint(x: align(origin.x), y: bounds.minY))
         path.addLineToPoint(CGPoint(x: align(origin.x), y: bounds.maxY))
         path.stroke()
-        drawHashmarksInRect(bounds, origin: origin, pointsPerUnit: abs(pointsPerUnit))
+        if drawHashmarks{
+            drawHashmarksInRect(bounds, origin: origin, pointsPerUnit: abs(pointsPerUnit))
+        }
         CGContextRestoreGState(UIGraphicsGetCurrentContext())
     }
 

@@ -32,8 +32,17 @@ class GraphView: UIView {
         }
     }
     
+    var drawCurve : Bool = true{
+        didSet{
+            Axes.drawHashmarks = drawCurve
+        }
+    }
+    
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
+        
+        guard drawCurve else { return }
+        
         var xGraphPoint  : CGFloat, yGraphPoint : CGFloat
         var xValue : CGFloat { get { return (xGraphPoint - pointAxesCenter.x) / scale } }
         let path = UIBezierPath()
