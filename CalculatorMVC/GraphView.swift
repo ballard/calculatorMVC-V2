@@ -32,8 +32,6 @@ class GraphView: UIView {
         }
     }
     
-//    var pointAxesCenter = CGPoint(x: 0.0, y: 0.0)
-    
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
         var xGraphPoint  : CGFloat, yGraphPoint : CGFloat

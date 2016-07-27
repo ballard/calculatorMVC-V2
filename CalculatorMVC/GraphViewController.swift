@@ -26,9 +26,7 @@ class GraphViewController: UIViewController {
         static let Scale = "GraphViewController.Scale"
         static let Center = "GraphViewController.AxesCenter"
     }
-    
     let defaults = NSUserDefaults.standardUserDefaults()
-
     private var pointRelativeToCenter : CGPoint{
         get{
             if let center = defaults.objectForKey(Keys.Center) as? String {
@@ -42,19 +40,25 @@ class GraphViewController: UIViewController {
             defaults.setObject(NSStringFromCGPoint(CGPoint(x: newValue.x / graphView.bounds.midX, y: newValue.y / graphView.bounds.midY)), forKey: Keys.Center)
         }
     }
+    private var scale : CGFloat{
+        get{
+             return defaults.objectForKey(Keys.Scale) as? CGFloat ?? 50.0
+        }
+        set{
+            defaults.setObject(newValue, forKey: Keys.Scale)
+        }
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
         graphView?.pointAxesCenter = pointRelativeToCenter
-        if let scale = defaults.objectForKey(Keys.Scale) as? CGFloat{
-            graphView?.scale = scale
-        }
+        graphView?.scale = scale
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(true)
         pointRelativeToCenter = graphView.pointAxesCenter
-        defaults.setObject(graphView.scale, forKey: Keys.Scale)
+        scale = graphView.scale
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -81,16 +85,15 @@ class GraphViewController: UIViewController {
         }
     }
     
-    private var previousPanCoordinates = CGPoint(x: 0.0, y: 0.0)
-    
     @IBAction private func pan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
-        case .Began:
-            previousPanCoordinates = recognizer.locationInView(graphView)
         case .Changed, .Ended:
-            graphView?.pointAxesCenter.x += (recognizer.locationInView(graphView).x - previousPanCoordinates.x)
-            graphView?.pointAxesCenter.y += (recognizer.locationInView(graphView).y - previousPanCoordinates.y)
-            previousPanCoordinates = recognizer.locationInView(graphView)
+            let translation = recognizer.translationInView(graphView)
+            if translation != CGPointZero{
+                graphView?.pointAxesCenter.x += translation.x
+                graphView?.pointAxesCenter.y += translation.y
+                recognizer.setTranslation(CGPointZero, inView: graphView)
+            }
         default:
             break
         }
