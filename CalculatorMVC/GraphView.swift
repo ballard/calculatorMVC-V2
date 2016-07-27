@@ -32,6 +32,8 @@ class GraphView: UIView {
         }
     }
     
+//    var pointAxesCenter = CGPoint(x: 0.0, y: 0.0)
+    
     override func drawRect(rect: CGRect) {
         Axes.drawAxesInRect(self.bounds, origin: pointAxesCenter, pointsPerUnit: scale)
         var xGraphPoint  : CGFloat, yGraphPoint : CGFloat
@@ -44,11 +46,11 @@ class GraphView: UIView {
             xGraphPoint = CGFloat(valueIndex) / contentScaleFactor
             guard let yValue = graphFunc?(xValue) where yValue.isNormal || yValue.isZero else { continue }
             yGraphPoint = (pointAxesCenter.y - (yValue * scale))
-                if abs(yGraphPoint - previousYGraphPoint) > bounds.height * 1.5 || previousYGraphPoint == CGFloat.min {
-                    path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint))
-                } else {
-                    path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint))
-                }
+            if abs(yGraphPoint - previousYGraphPoint) > bounds.height * 1.5 || previousYGraphPoint == CGFloat.min {
+                path.moveToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint))
+            } else {
+                path.addLineToPoint(CGPoint(x: xGraphPoint, y: yGraphPoint))
+            }
             previousYGraphPoint = yGraphPoint
         }
         path.stroke()

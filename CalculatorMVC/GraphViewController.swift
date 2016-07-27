@@ -24,56 +24,45 @@ class GraphViewController: UIViewController {
     
     private struct Keys{
         static let Scale = "GraphViewController.Scale"
-        static let Center = "GraphViewController.RelativeCenter"
+        static let Center = "GraphViewController.AxesCenter"
     }
     
     let defaults = NSUserDefaults.standardUserDefaults()
-    private var graphSettings = [AnyObject]()
-    typealias PropertyList = AnyObject
-    var settings : PropertyList {
-        get {
-            return graphSettings
-        }
-    }
-    
-    private var pointRelativeToCenterStored : CGPoint?
+
     private var pointRelativeToCenter : CGPoint{
         get{
-            return pointRelativeToCenterStored ?? CGPointZero
+            if let center = defaults.objectForKey(Keys.Center) as? String {
+                let relativeCenter = CGPointFromString(center)
+                return CGPoint(x: relativeCenter.x * graphView.bounds.maxX, y: relativeCenter.y * graphView.bounds.maxY)
+            } else {
+                return CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)
+            }
         }
         set{
-            pointRelativeToCenterStored = newValue
+            defaults.setObject(NSStringFromCGPoint(CGPoint(x: newValue.x / graphView.bounds.maxX, y: newValue.y / graphView.bounds.maxY)), forKey: Keys.Center)
         }
     }
     
-    override internal func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-        if let center = defaults.objectForKey(Keys.Center) as? String{
-            let relativeCenter = CGPointFromString(center)
-            graphView?.pointAxesCenter = CGPoint(x: relativeCenter.x * graphView.bounds.midX, y:relativeCenter.y * graphView.bounds.midY)
-        } else {
-            graphView?.pointAxesCenter =  CGPoint(x: graphView.bounds.midX, y: graphView.bounds.midY)
-        }
+        graphView?.pointAxesCenter = pointRelativeToCenter
         if let scale = defaults.objectForKey(Keys.Scale) as? CGFloat{
             graphView?.scale = scale
         }
     }
     
-    override internal func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        if let gvc = graphView {
-            pointRelativeToCenter = CGPoint(x: gvc.pointAxesCenter.x / gvc.bounds.midX, y: gvc.pointAxesCenter.y / gvc.bounds.midY)
-        }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        graphView?.pointAxesCenter = CGPoint(x: pointRelativeToCenter.x * graphView.bounds.midX, y:pointRelativeToCenter.y * graphView.bounds.midY)
-    }
-    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(true)
+        pointRelativeToCenter = graphView.pointAxesCenter
         defaults.setObject(graphView.scale, forKey: Keys.Scale)
-        defaults.setObject(NSStringFromCGPoint(CGPoint(x: graphView.pointAxesCenter.x / graphView.bounds.midX, y: graphView.pointAxesCenter.y / graphView.bounds.midY)), forKey: Keys.Center)
+    }
+    
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        self.pointRelativeToCenter = self.graphView.pointAxesCenter
+        coordinator.animateAlongsideTransition(nil) { [weak weakSelf = self] (context) in
+            weakSelf?.graphView?.pointAxesCenter = (weakSelf?.pointRelativeToCenter)!
+        }
     }
     
     @IBAction private func zoom(recognizer: UIPinchGestureRecognizer) {
