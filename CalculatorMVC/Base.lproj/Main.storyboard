@@ -582,10 +582,10 @@
             </objects>
             <point key="canvasLocation" x="3684" y="817"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Calculator-->
         <scene sceneID="o5h-bp-WJ7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Dm-8G-HTP" sceneMemberID="viewController">
+                <navigationController title="Calculator" automaticallyAdjustsScrollViewInsets="NO" id="2Dm-8G-HTP" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xCA-5H-vzG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

@@ -49,14 +49,14 @@ class GraphViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         graphView?.pointAxesCenter = pointRelativeToCenter
         graphView?.scale = scale
     }
     
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(true)
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
         pointRelativeToCenter = graphView.pointAxesCenter
         scale = graphView.scale
     }
@@ -64,9 +64,9 @@ class GraphViewController: UIViewController {
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
         self.pointRelativeToCenter = self.graphView.pointAxesCenter
-        coordinator.animateAlongsideTransition(nil) { [weak weakSelf = self] (context) in
+        coordinator.animateAlongsideTransition({ [weak weakSelf = self] (context) in
             weakSelf?.graphView?.pointAxesCenter = (weakSelf?.pointRelativeToCenter)!
-        }
+            }, completion: nil)
     }
     
     var snapshot : UIView?
